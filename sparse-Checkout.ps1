@@ -10,10 +10,12 @@ param(
         ValueFromPipeline = $true,
         ValueFromPipelineByPropertyName = $true)
     ]
-    [string]$URL
+    [string]$URL,
+    [switch]$Add=$false,
+    [switch]$DontPull=$false
 )
 
-$Repo = & "$PSScriptRoot//Parse-GitHubURL.ps1" -URL $URL;
+$Repo = & "$PSScriptRoot//parse-GitHubURL.ps1" -URL $URL;
 
 
 if (  $null -eq $Repo.Owner -or `
@@ -22,13 +24,21 @@ if (  $null -eq $Repo.Owner -or `
         $null -eq $Repo.Path
 ) {
     Write-Error 'URL is incomplete' ;
+    return ;
 };
 
-git clone "https://github.com/$($Repo.Owner)/$($Repo.Name)" --no-checkout  --depth 1;
-Set-Location  $Repo.Name;
-git sparse-checkout init;
-Set-Content -Path .\.git\info\sparse-checkout -Value $Repo.Path;
+if(!$Add){
+
+    git clone "https://github.com/$($Repo.Owner)/$($Repo.Name)" --no-checkout  --depth 1;
+    Set-Location  $Repo.Name;
+    git sparse-checkout init;
+}
+
+$Repo.Path | Out-File -FilePath ".\.git\info\sparse-checkout" -Append;
 git sparse-checkout list;
-git checkout "origin/$($Repo.Branch)";
+
+if(!$DontPull){
+    git checkout "origin/$($Repo.Branch)";
+}
 
 
