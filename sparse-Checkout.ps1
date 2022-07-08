@@ -35,7 +35,7 @@ if(!$Add){
 $Repo.Path | Out-File -FilePath ".\.git\info\sparse-checkout" -Append;
 git sparse-checkout list;
 
-if(!$DontPull){
+if((!$DontPull) -and (!$Add)  ){
     git checkout "origin/$($Repo.Branch)";
 }
 
