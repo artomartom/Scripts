@@ -29,7 +29,7 @@ class Script(Action):
 class Python(Script):
 
     def get_content(self):
-        return '#!/usr/bin/env python3'
+        return  '#!/usr/bin/env python3\n\n\nif  __name__ == "__main__":\n    print("hello")'
 
     def get_filename(self,name:str):
         return f'{name}.py'
