@@ -1,0 +1,57 @@
+
+for(int i {};auto x : std::as_const(str)) {  } //initializers in range based for 
+for(auto object : {object1, object2, object3}) {   // work } //&& initializer list 
+  
+"rename  git branch":  {
+  git branch -m master main
+}
+"remove git submodule":  {
+    git rm <path-to-submodule>
+}
+
+/** push localName branch  to remoteName remote branch
+ * git push -u origin localName:remoteName
+ */
+ 
+ 
+"make git track submodule at a branch" :{
+cd /path/to/your/parent/repo
+  git config -f .gitmodules submodule.<path>.branch <branch>
+
+cd path/to/your/submodule
+  git checkout -b branch --track origin/branch
+    # if the master branch already exist:
+    git branch -u origin/master master
+    
+cd /path/to/your/parent/repo
+  git add path/to/your/submodule
+  git commit -m "Make submodule tracking a branch"
+  #Subsequent update for that submodule will have to use the --remote option: 
+  # update your submodule
+  # --remote will also fetch and ensure that
+  # the latest commit from the branch is used
+  git submodule update --remote
+
+  # to avoid fetching use
+  git submodule update --remote --no-fetch 
+}
+__________________________________________
+The following kinds of identifiers have no linkage:
+-Names that have neither external nor internal linkage
+-Names declared in local scopes (with exceptions of certain entities declared with the extern keyword)
+-Identifiers that do not represent an object or a function, including labels, enumerators, 
+typedef names that refer to entities with no linkage, type names, function parameters, and  stemplate names 
+ 
+"public IP address":
+{
+  curl https://ipinfo.io/ip  
+} 
+_________________________________
+C++98	__cplusplus   199711
+C++11	__cplusplus   201103
+C++14	__cplusplus   201402
+C++17	__cplusplus   201703
+C++20	__cplusplus   202002
+__________________________________________
+//explicit compiler selection for cmake 
+cmake -G Ninja  -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_COMPILER=g++ -S ./
